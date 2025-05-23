@@ -1,35 +1,60 @@
-import { format } from 'date-fns'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+import AddPost from './AddPost';
 
-const Post = ({posts}) => {
-
+const Post = ({
+  posts,
+  setPosts,
+  addPostTitle,
+  setAddPostTitle,
+  addPostAuthor,
+  setAddPostAuthor,
+  addPostContent,
+  setAddPostContent,
+  handleClick
+}) => {
   return (
-   <>
-    {
-      posts.map(post => (
-  <div className="container mt-4" key={post.id}>
-      <div className="card">
-        <div className="card-body">
-          <Link to={`/post/${post.id}`}>
-          <h4 className="card-title">{post.title}</h4>
-        </Link>
+    <>
+      <div className="container ">
+        <div className="row">
 
-          <h6 className="card-subtitle mb-2 text-muted">
-            By {post.author} on {posts.date}
-          </h6>
-          <p className="card-text">
-            {post.content.length < 40 ? post.content :` ${post.content.slice(0,40)}....`}
-          </p>
+           <div className="mt-2">
+          <h5>Add a New Post</h5>
+          <AddPost
+            posts = {posts}
+            setPosts={setPosts}
+            addPostTitle={addPostTitle}
+            setAddPostTitle={setAddPostTitle}
+            addPostAuthor={addPostAuthor}
+            setAddPostAuthor={setAddPostAuthor}
+            addPostContent={addPostContent}
+            setAddPostContent={setAddPostContent}
+            handleClick={handleClick}
+          />
         </div>
+
+          {posts.map(post => (
+            <div className="col-12 mb-4" key={post.id}>
+              <div className="card shadow-sm">
+                <div className="card-body">
+                  <Link to={`/post/${post.id}`} className="text-decoration-none">
+                    <h4 className="card-title text-primary">{post.title}</h4>
+                  </Link>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    By {post.author} on {post.date}
+                  </h6>
+                  <p className="card-text">
+                    {post.content}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
-    </div>      
-    
-  ))
-    }
-   </>
-  )
-}
+    </>
+  );
+};
 
-export default Post
-
+export default Post;
